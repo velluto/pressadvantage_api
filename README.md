@@ -1,15 +1,15 @@
-#Press Advantage API
+# Press Advantage API
 This is a quick tutorial on how to use the Press Advantage API.  Please contact support@pressadvantage.com with any questions.
 
-#Getting Started
-When creating a release you have two major options.  First is a self written release.  You provide the content, and we publish it.
+# Getting Started
+When creating a release you have two major options.
+- First is a self written release.  You provide the content, and we publish it.
 
-Second, you can leverage our writing services by providing some basic information and we will write a press release based on your order.  You
-will then have an opportunity to revise and review it prior to distribution.
+- Second, you can leverage our writing services by providing some basic information and we will write a press release based on your order. You will then have an opportunity to revise and review it prior to distribution.
 
 NOTE:  The API key and hostname used here are development names and you should be sure to use real data there.
 
-#Organizations
+# Organizations
 Before you order a release, you need to have an Organization to attach it to.  Organizations hold all of the relevant information that
 we need about whoever is publishing the release.
 
@@ -22,7 +22,8 @@ Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/organ
     "name": "Test Organization",
     "contact_name": "The Big Boss",
     "contact_phone": "(425) 555-1212",
-    "contact_email": "bossman@sample.org"
+    "contact_email": "bossman@sample.org",
+    "website_url": "http://github.com"
   }
 }
 ```
@@ -39,7 +40,7 @@ Response:
   "address": null,
   "facebook_id": null,
   "twitter_id": null,
-  "website_url": null,
+  "website_url": "http://github.com",
   "show_website_in_iframe": false,
   "show_on_pressadvantage_homepage": true
 }
@@ -77,14 +78,97 @@ Response:
     "address": null,
     "facebook_id": null,
     "twitter_id": null,
-    "website_url": null,
+    "website_url": "http://github.com",
     "show_website_in_iframe": false,
     "show_on_pressadvantage_homepage": true
   }
 ]
 ```
 
-#Self Written Releases
+If you want to get details of an organization associated with your accounts, you can get one like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/organizations/18.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+{
+  "id": 18,
+  "name": "Test Organization",
+  "contact_name": "The Big Boss",
+  "contact_phone": "(425) 555-1212",
+  "contact_email": "bossman@sample.org",
+  "about_text": null,
+  "address": null,
+  "facebook_id": null,
+  "twitter_id": null,
+  "website_url": "http://github.com",
+  "show_website_in_iframe": false,
+  "show_on_pressadvantage_homepage": true
+}
+```
+
+To updatde an organization:
+
+NOTE: If you want to prevent any releases from showing up on the Press Advantage home page and release feed, set 'show_on_pressadvantage_homepage' to false, otherwise all releases for this organization will be fully distributed.
+
+```
+Sending HTTP PUT request to: https://app.pressadvantage.com/api/customers/organizations/18.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "organization": {
+    "name": "Test Organization",
+    "contact_name": "The Big Boss Updated"
+  }
+}
+```
+
+Response:
+```
+{
+  "id": 18,
+  "name": "Test Organization",
+  "contact_name": "The Big Boss Updated",
+  "contact_phone": "(425) 555-1212",
+  "contact_email": "bossman@sample.org",
+  "about_text": null,
+  "address": null,
+  "facebook_id": null,
+  "twitter_id": null,
+  "website_url": "http://github.com",
+  "show_website_in_iframe": false,
+  "show_on_pressadvantage_homepage": true
+}
+```
+
+If you want to get all the releases for an organization associated with your accounts, you can get one like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/organizations/18/releases.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+[
+  {
+    "id": 10,
+    "state": "completed",
+    "status": "Completed and Published",
+    "title": "Varius Nulla Facilisi Cras Non",
+    "body": "<p>Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.</p>",
+    "body_without_markup": null,
+    "sandbox_order": true,
+    "urls": []
+  },
+  {
+    "id": 12,
+    "state": "needs_distribution_waiting_for_scheduled_date",
+    "status": "Will Distribute At 2015-10-13 21:58:15 UTC",
+    "sandbox_order": true,
+    "urls": []
+  }
+]
+```
+
+# Self Written Releases
 Now we will walk through the process of creating a self-written release.  We will provide content as part of the API request.
 
 First, we create the release:
@@ -121,6 +205,8 @@ The state 'needs_to_be_ordered' is an interim state.  It acknowledges your order
 processed your order, the state will change to 'needs_content_approval_by_editors'
 
 NOTE:  We supply you the internal 'state' which is useful programatically, as well as a 'status' field which is a human friendly description of the status of a given release.
+
+If you want to get details of a release associated with your accounts, you can get it like this:
 
 ```
 Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/releases/77.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
@@ -266,7 +352,7 @@ Response from server:
 
 After distribution has been completed, 'urls' will provide a sample subset of pickups.  We currently do not provide a comprehensive list of pickups available.
 
-#Written For You Releases
+# Written For You Releases
 Using our writing services is similar, but uses a different endpoint and adds interaction with the writing team as well.
 
 To order a release that uses our writing services, use the following:
@@ -481,3 +567,421 @@ Response from server:
 
 You can see how the distribution is scheduled for a future time.  This will automatically move down the same distribution event path as our self-written release once that time has been reached.
 
+If you want to add yahoo finance distribution, you can get it done like this:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/releases/77/upgrade_distribution.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+{
+    "id": 12,
+    "state": "needs_distribution_waiting_for_scheduled_date",
+    "status": "Will Distribute At 2015-10-13 21:58:15 UTC",
+    "sandbox_order": true,
+    "urls": []
+}
+```
+
+If you want to get all the releases associated with your accounts, you can get it like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/releases.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+[
+  {
+    "id": 10,
+    "state": "completed",
+    "status": "Completed and Published",
+    "title": "Varius Nulla Facilisi Cras Non",
+    "body": "<p>Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.</p>",
+    "body_without_markup": null,
+    "sandbox_order": true,
+    "urls": []
+  },
+  {
+    "id": 12,
+    "state": "needs_distribution_waiting_for_scheduled_date",
+    "status": "Will Distribute At 2015-10-13 21:58:15 UTC",
+    "sandbox_order": true,
+    "urls": []
+  }
+]
+```
+
+# Pixels
+
+To create a pixel:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/retargeting_pixels.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "retargeting_pixel": {
+    "name": "Test Pixel",
+    "code": "Test Code"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 2,
+    "name": "Test Pixel",
+    "code": "Test Code"
+}
+```
+
+If you want to get a list of all pixels, you can get it like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/retargeting_pixels.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+[
+    {
+        "id": 2,
+        "name": "Test Pixel",
+        "code": "Test Code"
+    },
+    {
+        "id": 3,
+        "name": "Temp Pixel",
+        "code": "Temp Code"
+    }
+]
+```
+
+If you want to get details of a pixel, you can get it like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/retargeting_pixels/2.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+Response:
+```
+{
+    "id": 2,
+    "name": "Test Pixel",
+    "code": "Test Code"
+}
+```
+
+To updatde a pixel:
+```
+Sending HTTP PUT request to: https://app.pressadvantage.com/api/customers/retargeting_pixels/2.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "retargeting_pixel": {
+    "name": "Test Pixel updated",
+    "code": "Test Code"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 2,
+    "name": "Test Pixel updated",
+    "code": "Test Code"
+}
+```
+
+# Scheduled Release Orders
+
+To create a scheduled release order:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "scheduled_release_order": {
+    "organization_id": "2",
+    "description": "Test description",
+    "scheduled_release_subjects_attributes": [
+        {
+            "keyword": "test subject"
+        }
+    ],
+    "scheduled_release_keywords_attributes": [
+        {
+            "keyword": "test release"
+        }
+    ]
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 1,
+    "description": "Test description",
+    "active": true,
+    "status": "Waiting for next order date",
+    "distribution": "standard",
+    "releases_status": "0/30",
+    "keywords_per_release": 3,
+    "order_type": "standard",
+    "organization": {
+        "id": 2,
+        "name": "Test Organization",
+        "contact_name": "The Big Boss UP",
+        "contact_phone": "(425) 555-1212",
+        "contact_email": "bossman@sample.org",
+        "about_text": null,
+        "address": null,
+        "facebook_id": null,
+        "twitter_id": null,
+        "website_url": "http://localhost.com",
+        "show_website_in_iframe": false,
+        "show_on_pressadvantage_homepage": true
+    },
+    "schedule_days": 30,
+    "last_ordered_at": null,
+    "order_due_at": null
+}
+```
+
+If you want to get a list of all scheduled release orders, you can get it like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+[
+    {
+        "id": 1,
+        "description": "Test description",
+        "active": true,
+        "status": "Waiting for next order date",
+        "distribution": "standard",
+        "releases_status": "0/30",
+        "keywords_per_release": 3,
+        "order_type": "standard",
+        "organization": {
+            "id": 2,
+            "name": "Test Organization",
+            "contact_name": "The Big Boss UP",
+            "contact_phone": "(425) 555-1212",
+            "contact_email": "bossman@sample.org",
+            "about_text": null,
+            "address": null,
+            "facebook_id": null,
+            "twitter_id": null,
+            "website_url": "http://localhost.com",
+            "show_website_in_iframe": false,
+            "show_on_pressadvantage_homepage": true
+        },
+        "schedule_days": 30,
+        "last_ordered_at": null,
+        "order_due_at": null
+    }
+]
+```
+
+If you want to get details of a scheduled release order, you can get it like this:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+{
+    "id": 1,
+    "description": "Test description",
+    "active": true,
+    "status": "Waiting for next order date",
+    "distribution": "standard",
+    "releases_status": "0/30",
+    "keywords_per_release": 3,
+    "order_type": "standard",
+    "organization": {
+        "id": 2,
+        "name": "Test Organization",
+        "contact_name": "The Big Boss UP",
+        "contact_phone": "(425) 555-1212",
+        "contact_email": "bossman@sample.org",
+        "about_text": null,
+        "address": null,
+        "facebook_id": null,
+        "twitter_id": null,
+        "website_url": "http://localhost.com",
+        "show_website_in_iframe": false,
+        "show_on_pressadvantage_homepage": true
+    },
+    "schedule_days": 30,
+    "last_ordered_at": null,
+    "order_due_at": null
+}
+```
+
+To updatde a scheduled release order:
+```
+Sending HTTP PUT request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "scheduled_release_order": {
+    "organization_id": "2",
+    "description": "Test description updated"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 1,
+    "description": "Test description updated",
+    "active": true,
+    "status": "Waiting for next order date",
+    "distribution": "standard",
+    "releases_status": "0/30",
+    "keywords_per_release": 3,
+    "order_type": "standard",
+    "organization": {
+        "id": 2,
+        "name": "Test Organization",
+        "contact_name": "The Big Boss UP",
+        "contact_phone": "(425) 555-1212",
+        "contact_email": "bossman@sample.org",
+        "about_text": null,
+        "address": null,
+        "facebook_id": null,
+        "twitter_id": null,
+        "website_url": "http://localhost.com",
+        "show_website_in_iframe": false,
+        "show_on_pressadvantage_homepage": true
+    },
+    "schedule_days": 30,
+    "last_ordered_at": null,
+    "order_due_at": null
+}
+```
+
+### Scheduled Release Video
+
+To create a scheduled release video:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1/scheduled_release_video.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "scheduled_release_video": {
+    "url": "https://www.youtube.com/"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 1,
+    "url": "https://www.youtube.com/"
+}
+```
+
+### Scheduled Release Image
+
+To create a scheduled release image:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1/scheduled_release_image.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "scheduled_release_image": {
+    "alt_text": "press release image",
+    "raw_url": "https://www.shopivo.com/blog/wp-content/uploads/2019/06/Press-Release-Header.png"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 1,
+    "alt_text": "press release image",
+    "image": {
+        "url": null,
+        "optimized": {
+            "url": null
+        },
+        "desktop": {
+            "url": null
+        },
+        "mobile": {
+            "url": null
+        },
+        "thumbnail": {
+            "url": null
+        },
+        "pdf_logo": {
+            "url": null
+        },
+        "pdf_logo_fill": {
+            "url": null
+        }
+    },
+    "raw_url": "https://www.shopivo.com/blog/wp-content/uploads/2019/06/Press-Release-Header.png"
+}
+```
+
+### Scheduled Release Subject
+
+To create a scheduled release subject:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1/scheduled_release_subject.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "scheduled_release_subject": {
+    "keyword": "test subject"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 2,
+    "keyword": "test subject"
+}
+```
+
+### Scheduled Release Keyword
+
+To create a scheduled release keyword:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1/scheduled_release_keyword.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "scheduled_release_keyword": {
+    "keyword": "test keyword"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 2,
+    "keyword": "test keyword",
+    "url": null,
+    "prev_release": null,
+    "url_option": "url",
+    "release_stack_option": "random_release_in_stack"
+}
+```
+
+### First Release Keyword
+
+To create a first release keyword:
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/scheduled_release_orders/1/first_release_keyword.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+  "first_release_keyword": {
+    "keyword": "Test keyword",
+    "url": "https://github.com"
+  }
+}
+```
+
+Response:
+```
+{
+    "id": 1,
+    "keyword": "Test keyword",
+    "url": "https://github.com"
+}
+```
