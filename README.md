@@ -611,6 +611,63 @@ Response:
 ]
 ```
 
+# Upgrading Distribution - Adding Wires
+
+To get a list of available distributions for your release:
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/releases/79/distributions.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+[
+  {
+    "id": 42,
+    "name": "Test 1",
+    "admin_name": "Test 1",
+    "cost": "0.0",
+    "cogs": "0.0",
+    "credit_type": "premium",
+    "default_credit_price": "20.0"
+  },
+  {
+    "id": 43,
+    "name": "Test 2",
+    "admin_name": "Test 2",
+    "cost": "0.0",
+    "cogs": "0.0",
+    "credit_type": "premium",
+    "default_credit_price": "20.0"
+  }
+]
+```
+
+To add a wire to a release:
+```
+Sending HTTP PUT request to: https://app.pressadvantage.com/api/customers/releases/79/add_distribution_upgrade.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+    "distribution_ids": "42, 43"
+}
+```
+
+Response:
+```
+{
+    "id": 10,
+    "state": "completed",
+    "status": "Completed and Published",
+    "title": "Varius Nulla Facilisi Cras Non",
+    "body": "<p>Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.</p>",
+    "body_without_markup": null,
+    "sandbox_order": true,
+    "urls": [],
+    "attached_distributions": [
+      "Test Distribution",
+      "Test 2 Distribution"
+    ]
+  }
+```
+
 # Pixels
 
 To create a pixel:
