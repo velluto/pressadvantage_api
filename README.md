@@ -23,7 +23,8 @@ Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/organ
     "contact_name": "The Big Boss",
     "contact_phone": "(425) 555-1212",
     "contact_email": "bossman@sample.org",
-    "website_url": "http://github.com"
+    "website_url": "http://github.com",
+    "authorization_confirmed": true
   }
 }
 ```
@@ -170,6 +171,8 @@ Response:
 
 # Self Written Releases
 Now we will walk through the process of creating a self-written release.  We will provide content as part of the API request.
+
+Note: If you want to create a draft press release, pass a draft_order flag in params with a value as true.
 
 First, we create the release:
 
@@ -355,6 +358,8 @@ After distribution has been completed, 'urls' will provide a sample subset of pi
 # Written For You Releases
 Using our writing services is similar, but uses a different endpoint and adds interaction with the writing team as well.
 
+Note: If you want to create a draft press release, pass a draft_order flag in params with a value as true.
+
 To order a release that uses our writing services, use the following:
 
 ```
@@ -411,6 +416,56 @@ Response from server:
   "instruction_guideline_compliance": "exception_minimal",
   "sandbox_order": true,
   "urls": [
+
+  ]
+}
+```
+
+To finalize a draft order so that our system can start processing it, you can use the below endpoint to move the status of press release from draft_order to needs_to_be_ordered:
+
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/releases/79/finalize_draft_order.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+}
+```
+
+
+Response from server:
+```
+{
+  "id": 79,
+  "state": "needs_to_be_ordered",
+  "status": "Not Yet Started",
+  "sandbox_order": true,
+  "urls": [
+
+  ],
+  "attached_distributions": [
+
+  ]
+}
+```
+
+To cancel a press release, you can use the below endpoint:
+
+```
+Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/releases/79/cancel.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with POST Payload:
+{
+}
+```
+
+
+Response from server:
+```
+{
+  "id": 79,
+  "state": "cancelled",
+  "status": "Cancelled",
+  "sandbox_order": true,
+  "urls": [
+
+  ],
+  attached_distributions: [
 
   ]
 }
