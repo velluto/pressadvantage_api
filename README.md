@@ -220,10 +220,7 @@ Response:
   "id": 77,
   "state": "needs_content_approval_by_editors",
   "status": "Waiting For Editorial Approval",
-  "sandbox_order": true,
-  "urls": [
-
-  ]
+  "sandbox_order": true
 }
 ```
 
@@ -353,7 +350,41 @@ Response from server:
 }
 ```
 
-After distribution has been completed, 'urls' will provide a sample subset of pickups.  We currently do not provide a comprehensive list of pickups available.
+After distribution has been completed, you can retrieve the full list of pickup URLs using the built_urls endpoint described below.
+
+# Pickup URLs (Built URLs)
+
+Once a release is completed and distributed, you can retrieve the full list of pickup URLs using this endpoint:
+
+```
+Sending HTTP GET request to: https://app.pressadvantage.com/api/customers/releases/77/built_urls.json?api_key=238416144f20b151d6d6f4710d2578453089fc81
+```
+
+Response:
+```
+[
+  {
+    "id": 1001,
+    "url": "https://example-news-site.com/press-release/title",
+    "host_name": "example-news-site.com",
+    "host_page_rank": 5,
+    "host_supports_images": true,
+    "host_supports_retargeting": false,
+    "host_indexed_in_google_news": true
+  },
+  {
+    "id": 1002,
+    "url": "https://another-outlet.com/press-release/title",
+    "host_name": "another-outlet.com",
+    "host_page_rank": 3,
+    "host_supports_images": false,
+    "host_supports_retargeting": false,
+    "host_indexed_in_google_news": false
+  }
+]
+```
+
+This endpoint returns the same data shown in the CSV export on the release report page.
 
 # Written For You Releases
 Using our writing services is similar, but uses a different endpoint and adds interaction with the writing team as well.
@@ -715,7 +746,6 @@ Response:
     "body": "<p>Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.</p>",
     "body_without_markup": null,
     "sandbox_order": true,
-    "urls": [],
     "attached_distributions": [
       "Test Distribution",
       "Test 2 Distribution"
