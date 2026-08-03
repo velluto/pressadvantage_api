@@ -198,9 +198,7 @@ Response from server:
   "state": "needs_to_be_ordered",
   "status": "Not Yet Started",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -244,9 +242,7 @@ Response from server:
   "status": "Ready For You To Revise Content",
   "distribution_reject_reason": "Sandbox initiated content rejection",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -271,9 +267,7 @@ Response from server:
   "state": "needs_content_approval_by_editors",
   "status": "Waiting For Editorial Approval",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -296,9 +290,7 @@ Response from server:
   "body": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
   "body_without_markup": null,
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -322,9 +314,7 @@ Response from server:
   "body": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
   "body_without_markup": null,
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -344,9 +334,7 @@ Response from server:
   "body": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
   "body_without_markup": null,
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -418,9 +406,7 @@ Response from server:
   "state": "needs_to_be_ordered",
   "status": "Not Yet Started",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -446,11 +432,41 @@ Response from server:
   "status": "Ready For You To Confirm Instructions",
   "instruction_guideline_compliance": "exception_minimal",
   "sandbox_order": true,
-  "urls": [
+  "urls": []
+}
+```
+
+To change a press release before we've started fulfilling it — a draft you haven't submitted yet, or a release
+sitting in your queue — you can use the below endpoint.  Only the parameters you send are changed, and sending an
+empty value clears that field:
+
+```
+Sending HTTP PUT request to: https://app.pressadvantage.com/api/customers/releases/79.json?api_key=238416144f20b151d6d6f4710d2578453089fc81 with PUT Payload:
+{
+  "release": {
+    "description": "A better description of the release",
+    "main_keyword": "custom cabinetry",
+    "notes": "Please mention the new showroom hours."
+  }
+}
+```
+
+Response from server:
+```
+{
+  "id": 79,
+  "state": "draft_order",
+  "status": "Draft Waiting For Submission",
+  "sandbox_order": true,
+  "urls": [],
+  "attached_distributions": [
 
   ]
 }
 ```
+
+Once we have started fulfilling a release you'll get a 422 back from this endpoint instead, and any further changes
+happen through the revision endpoints when we ask you to review the release.
 
 To finalize a draft order so that our system can start processing it, you can use the below endpoint to move the status of press release from draft_order to needs_to_be_ordered:
 
@@ -468,9 +484,7 @@ Response from server:
   "state": "needs_to_be_ordered",
   "status": "Not Yet Started",
   "sandbox_order": true,
-  "urls": [
-
-  ],
+  "urls": [],
   "attached_distributions": [
 
   ]
@@ -493,9 +507,7 @@ Response from server:
   "state": "cancelled",
   "status": "Cancelled",
   "sandbox_order": true,
-  "urls": [
-
-  ],
+  "urls": [],
   attached_distributions: [
 
   ]
@@ -518,9 +530,7 @@ Response from server:
   "state": "needs_content_completion_by_writers",
   "status": "Currently Being Written",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -544,9 +554,7 @@ Response from server:
   "body": "<p>Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.</p><p>Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.</p><p>Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.</p><p>Phasellus in felis. Donec semper sapien a libero. Nam dui.</p><p>Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.</p>",
   "body_without_markup": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -571,9 +579,7 @@ Response from server:
   "state": "needs_content_revision_by_writers",
   "status": "Currently Being Revised By Writers",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -597,9 +603,7 @@ Response from server:
   "body": "<p>Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.</p><p>Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p><p>Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.</p><p>Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.</p><p>Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.</p>",
   "body_without_markup": "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -623,9 +627,7 @@ Response from server:
   "state": "needs_content_approval_by_editors",
   "status": "Waiting For Editorial Approval",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
@@ -645,9 +647,7 @@ Response from server:
   "state": "needs_distribution_waiting_for_scheduled_date",
   "status": "Will Distribute At 2015-10-13T14:58:15-07:00",
   "sandbox_order": true,
-  "urls": [
-
-  ]
+  "urls": []
 }
 ```
 
