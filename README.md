@@ -185,7 +185,14 @@ Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/relea
     "distribution": "standard",
     "schedule_distribution": false,
     "title": "In Imperdiet Et Commodo Vulputate",
-    "body": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris."
+    "body": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
+    "include_image_embed": true,
+    "image_embed_url": "https://example.com/images/storefront.jpg",
+    "image_embed_alt_text": "The new showroom on Main Street",
+    "include_video_embed": true,
+    "video_embed_url": "https://www.example.com/watch?v=testing",
+    "include_map_embed": true,
+    "json_ld_contents": "{\"@context\":\"https://schema.org\",\"@type\":\"LocalBusiness\",\"name\":\"Test Organization\"}"
   }
 }
 ```
@@ -393,7 +400,14 @@ Sending HTTP POST request to: https://app.pressadvantage.com/api/customers/relea
     "main_keyword": "primary keyword",
     "url": "https://devpulse.org",
     "keyword": "anchor text",
-    "notes": "These are the instructions for the writing team. montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem"
+    "notes": "These are the instructions for the writing team. montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem",
+    "include_image_embed": true,
+    "image_embed_url": "https://example.com/images/storefront.jpg",
+    "image_embed_alt_text": "The new showroom on Main Street",
+    "include_video_embed": true,
+    "video_embed_url": "https://www.example.com/watch?v=testing",
+    "include_map_embed": true,
+    "json_ld_contents": "{\"@context\":\"https://schema.org\",\"@type\":\"LocalBusiness\",\"name\":\"Test Organization\"}"
   }
 }
 ```
